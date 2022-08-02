@@ -1,0 +1,94 @@
+version: '3.3'
+services:
+  php:
+    container_name: php
+    build:
+      context: docker/php
+      dockerfile: php.Dockerfile
+    volumes:
+      - "../viki-app:/var/www/html/viki-app"
+#      - "./docker/php/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf"
+      - "./docker/app/src:/app/src"
+    tty: true
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+    - "80:80"
+    - "443:443"
+    volumes:
+    - "./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf"
+    - "./docker/nginx:/var/log/nginx/conf.d"
+    - "../viki-app:/var/www/html/viki-app"
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: 'on-failure'
+#    restart: unless-stopped
+    tty: true
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "false"
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "viki_db"
+#      MYSQL_USER: "Trunbiz"
+#      MYSQL_PASSWORD: "Trunbiz@98"
+    volumes:
+      - "./docker/mysql/db:/var/lib/mysql"
+      - "./docker/mysql/custom.cnf:/etc/mysql/conf.d/mysql.cnf"
+      - "./docker/mysql/query.log:/var/log/query.log"
+    ports:
+    - "3306:3306"
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+    - 27017:27017
+    volumes:
+    - ./docker/mongodb_data:/data/db
+  redis:
+    image: redis
+    container_name: redis
+    hostname: redis
+    restart: 'on-failure'
+#  zookeeper:
+##    image: wurstmeister/zookeeper
+#    image: zookeeper
+#    restart: always
+#    container_name: zookeeper
+#    ports:
+#      - "2181:2181"
+#    volumes:
+#      - /docker/data/zookeeper:/opt/zookeeper*
+#  kafka:
+#    image: wurstmeister/kafka
+#    container_name: kafka
+#    build:
+#      context: docker/kafka
+#      dockerfile: kafka.Dockerfile
+#    ports:
+#      - "9092:9092"
+#    environment:
+#      - KAFKA_BROKER_ID=1
+#      - KAFKA_LISTENERS=PLAINTEXT://:9092
+#      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+#      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+#      - ALLOW_PLAINTEXT_LISTENER=yes
+#    volumes:
+#      - /docker/var/run/docker.sock:/var/run/docker.sock
+#      - /docker/data/kafka:/kafka
+#    depends_on:
+#      - zookeeper
+#  kafka-manager:
+#    image: hlebalbau/kafka-manager:stable
+#    container_name: kafka-manager
+#    restart: always
+#    ports:
+#      - "9000:9000"
+#    environment:
+#      ZK_HOSTS: "zookeeper:2181"
+#      APPLICATION_SECRET: "random-secret"
+#    command: -Dpidfile.path=/dev/null
