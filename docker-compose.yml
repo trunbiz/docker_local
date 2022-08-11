@@ -6,7 +6,7 @@ services:
       context: docker/php
       dockerfile: php.Dockerfile
     volumes:
-      - "../viki-app:/var/www/html/viki-app"
+      - "../monika:/var/www/html/monika"
 #      - "./docker/php/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf"
       - "./docker/app/src:/app/src"
     tty: true
@@ -19,7 +19,7 @@ services:
     volumes:
     - "./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf"
     - "./docker/nginx:/var/log/nginx/conf.d"
-    - "../viki-app:/var/www/html/viki-app"
+    - "../monika:/var/www/html/monika"
   mysql:
     image: mysql:8.0
     container_name: mysql
@@ -30,7 +30,7 @@ services:
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "false"
       MYSQL_ROOT_PASSWORD: "root"
-      MYSQL_DATABASE: "viki_db"
+      MYSQL_DATABASE: "monika_db"
 #      MYSQL_USER: "Trunbiz"
 #      MYSQL_PASSWORD: "Trunbiz@98"
     volumes:

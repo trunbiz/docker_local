@@ -1,3 +1,5 @@
 /.idea
 /.vscode
 /docker/mysql/db/*
+/docker/mongodb_data/*
+
