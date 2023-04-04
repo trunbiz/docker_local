@@ -1,12 +1,12 @@
-<h3>Hướng dẫn thiết lập môi trường</h3>
+<h3>Hướng dẫn thiết lập môi trường cho zion</h3>
 <hr>
 <b>Môi trường sử dụng PHP, Nginx, redis, kafka, mysql</b>
-<b>Chạy ứng dụng Laravel 7.x</b>
+<b>Chạy ứng dụng Laravel 8.0</b>
 <hr>
 <ul>
 <li>B1: Cài đặt docker</li>
 <ul>
-<li>Tạo file source chứa code project năm ngoài kowalski.local</li>
+<li>Tạo file source chứa code zion project năm ngoài thư mục docker_local</li>
 </ul>
 <li>B2: Chạy lệnh docker-compose build</li>
 <li>B3: Chạy lệnh docker-compose up (-d để chạy ngầm)</li>

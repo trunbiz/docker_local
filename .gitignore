@@ -2,4 +2,6 @@
 /.vscode
 /docker/mysql/db/*
 /docker/mongodb_data/*
+/docker/nginx/access.log
+/docker/nginx/error.log
 
