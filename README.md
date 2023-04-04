@@ -1,7 +1,7 @@
 <h3>Hướng dẫn thiết lập môi trường cho zion</h3>
 <hr>
 <b>Môi trường sử dụng PHP, Nginx, redis, kafka, mysql</b>
-<b>Chạy ứng dụng Laravel 8.0</b>
+<b>Chạy ứng dụng Laravel 8.1</b>
 <hr>
 <ul>
 <li>B1: Cài đặt docker</li>

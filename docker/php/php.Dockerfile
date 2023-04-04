@@ -1,4 +1,4 @@
-FROM php:8.0-fpm
+FROM php:8.1-fpm
 #FROM php:7.3-fpm
 
 
@@ -10,10 +10,17 @@ RUN apt-get update && apt-get install -y \
     --no-install-recommends \
     && rm -r /var/lib/apt/lists/*
 
-RUN docker-php-ext-install -j$(nproc) \
-    bcmath \
-    pdo_mysql \
-    tokenizer
+# Cài đặt các gói cần thiết
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    libonig-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libmcrypt-dev \
+    libpq-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd zip pdo_mysql mbstring exif pcntl bcmath opcache
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
