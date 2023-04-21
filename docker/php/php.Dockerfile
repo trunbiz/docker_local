@@ -1,4 +1,5 @@
-FROM php:8.1-fpm
+FROM php:8.0-fpm
+#FROM php:8.1-fpm
 #FROM php:7.3-fpm
 
 
